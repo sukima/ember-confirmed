@@ -1,0 +1,9 @@
+<p>Result was confirmed: {{if confirmed 'YES' 'NO'}}</p>
+
+{{#if resolver}}
+  <p>Confirmation?</p>
+  <button onclick={{action resolver.cancel}}>Cancel</button>
+  <button onclick={{action resolver.confirm}}>Ok</button>
+{{else}}
+  <button onclick={{action "showDialog"}}>Show Dialog</button>
+{{/if}}

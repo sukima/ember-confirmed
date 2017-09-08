@@ -1,17 +1,28 @@
 {
   "name": "ember-confirmed",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "An Ember asynchronous confirmation addon",
   "keywords": [
     "ember-addon"
   ],
   "license": "MIT",
-  "author": "",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
-  "repository": "",
+  "homepage": "https://github.com/sukima/ember-confirmed",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sukima/ember-confirmed.git"
+  },
+  "bugs": {
+    "url": "http://github.com/sukima/ember-confirmed/issues"
+  },
+  "author": {
+    "name": "Devin Weaver",
+    "email": "suki@tritarget.org",
+    "url": "https://tritarget.org/"
+  },
   "scripts": {
     "build": "ember build",
     "start": "ember server",
