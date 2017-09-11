@@ -2,12 +2,7 @@
 module.exports = {
   description: 'An Ember asynchronous confirmation addon',
 
-  // locals(options) {
-  //   // Return custom template variables here.
-  //   return {
-  //     foo: options.entity.options.foo
-  //   };
-  // }
+  normalizeEntityName: function () {},
 
   afterInstall() {
     return this.addPackageToProject('confirmed');
