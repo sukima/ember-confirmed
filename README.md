@@ -127,10 +127,10 @@ new Confirmer(function (resolver) {
 ```
 
 ```js
-import Ember from 'ember';
+import Component from '@ember/component';
 import Confirmer from 'confirmer';
 
-export default Ember.Component.extend({
+export default Component.extend({
   actions: {
     showDialog() {
       new Confirmer(resolver => this.set('resolver', resolver))
@@ -162,12 +162,12 @@ for a password.
 ```
 
 ```js
-import Ember from 'ember';
+import Component from '@ember/component';
 import Confirmer from 'confirmer';
 
 const REAL_PASSWORD = 'password';
 
-export default Ember.Component.extend({
+export default Component.extend({
   actions: {
     showDialog() {
       new Confirmer(resolver => this.set('resolver', resolver))
@@ -189,16 +189,17 @@ Notice that you can call the resolver functions multiple times and only the
 first one wins.
 
 ```js
-import Ember from 'ember';
+import Component from '@ember/component';
+import { later } from '@ember/runloop';
 import Confirmer from 'confirmer';
 
 const DIALOG_AUTO_CLOSE_DELAY = 5000;
 
-export default Ember.Component.extend({
+export default Component.extend({
   actions: {
     showDialog() {
       new Confirmer(resolver => {
-        Ember.run.later(resolver.cancel, DIALOG_AUTO_CLOSE_DELAY);
+        later(resolver.cancel, DIALOG_AUTO_CLOSE_DELAY);
         this.set('resolver', resolver);
       })
         .onConfirmed(() => this.set('confirmed', true))
