@@ -209,3 +209,59 @@ export default Component.extend({
   }
 });
 ```
+
+### Unsaved changes confirmation on route transition
+
+Here is an example if trapping a route transition and showing a confirmation
+dialog if the data is not saved (dirty).
+
+It shows how you can pass a Confirmer object around between each other.
+
+#### `app/routes/index.js`
+
+```js
+import Route from '@ember/routing/route';
+
+export default Route.extend({
+  actions: {
+    willTransition(transition) {
+      if (!this.currentModel.get('hasDirtyAttributes')) { return; }
+      transition.abort();
+      this.controller.showDirtyConfirmation()
+        .onConfirmed(() => {
+          this.currentModel.rollbackAttributes();
+          transition.retry();
+        });
+    }
+  }
+});
+```
+
+#### `app/controllers/index.js`
+
+```js
+import Controller from '@ember/controller';
+import Confirmer from 'confirmer';
+
+export default Controller.extend({
+  showDirtyConfirmation() {
+    return new Confirmer(resolver => {
+      this.set('modalAction', resolver);
+      this.set('showConfirmationModal', true);
+    })
+      .onDone(() => this.set('showConfirmationModal', false));
+  }
+});
+```
+
+#### `app/templates/index.hbs`
+
+```hbs
+{{#if showConfirmationModal}}
+  <div class="modal">
+    <p>You have unsaved changes. Are you sure wish to abandon them?<p>
+    <button {{action (action modalActions.cancel)}}>No</button>
+    <button {{action (action modalActions.confirm)}}>Yes</button>
+  </div>
+{{/if}}
+```
