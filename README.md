@@ -265,3 +265,40 @@ export default Controller.extend({
   </div>
 {{/if}}
 ```
+
+### Example using ember-remodal
+
+This is an example using the [ember-remodal addon](http://sethbrasile.github.io/ember-remodal/).
+
+```js
+import Controller from '@ember/controller';
+import { inject as service } from '@ember/service';
+import Confirmer from 'confirmer';
+
+export default Controller.extend({
+  remodal: service(),
+
+  showConfirmationModal() {
+    const remodel = this.get('remodal');
+    return new Confirmer(resolver => {
+      this.set('modalResolver', resolver);
+      remodal.open('confirmation');
+    }).onDone(() => remodal.close('confirmation'));
+  }
+});
+```
+
+```hbs
+{{#ember-remodal
+    isService=true
+    name="confirmation"
+    onConfirm=(action modalResolver.confirm)
+    onCancel=(action modalResolver.cancel)
+    onClose=(action modalResolver.cancel)
+    as |modal|}}
+  {{#modal.cancel}}<button class="pull-right">Close</button>{{/modal.cancel}}
+  <p>Pick yes or no:</p>
+  {{#modal.cancel}}<button>No</button>{{/modal.cancel}}
+  {{#modal.confirm}}<button>Yes</button>{{/modal.confirm}}
+{{/ember-remodal}}
+```
