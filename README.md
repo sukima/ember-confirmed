@@ -302,3 +302,26 @@ export default Controller.extend({
   {{#modal.confirm}}<button>Yes</button>{{/modal.confirm}}
 {{/ember-remodal}}
 ```
+
+### Example using ember-sweetalert
+
+This is an example of wrapping the [ember-sweetalert addon](https://github.com/Tonkpils/ember-sweetalert) in a Confirmer object.
+
+```js
+import Confirmer from 'confirmer';
+import sweetAlert from 'ember-sweetalert';
+
+export default function sweetAlertConfirmer(sweetAlertOptions) {
+  return new Confirmer(resolver => {
+    sweetAlert(sweetAlertOptions)
+      .then(result => {
+        if (result.dismiss) {
+          resolver.cancel(result.dismiss);
+        } else {
+          resolver.confirm(result.value);
+        }
+      })
+      .catch(resolver.error);
+  });
+}
+```
