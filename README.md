@@ -225,13 +225,11 @@ import Route from '@ember/routing/route';
 export default Route.extend({
   actions: {
     willTransition(transition) {
-      if (!this.currentModel.get('hasDirtyAttributes')) { return; }
-      transition.abort();
-      this.controller.showDirtyConfirmation()
-        .onConfirmed(() => {
-          this.currentModel.rollbackAttributes();
-          transition.retry();
-        });
+      let confirmer = this.controller.showDirtyConfirmation();
+      if (confirmer) {
+        transition.abort();
+        confirmer.onConfirmed(() => transition.retry());
+      }
     }
   }
 });
@@ -245,10 +243,12 @@ import Confirmer from 'confirmer';
 
 export default Controller.extend({
   showDirtyConfirmation() {
+    if (!this.get('model.hasDirtyAttributes')) { return; }
     return new Confirmer(resolver => {
       this.set('modalAction', resolver);
       this.set('showConfirmationModal', true);
     })
+      .onConfirmed(() => this.get('model').rollbackAttributes())
       .onDone(() => this.set('showConfirmationModal', false));
   }
 });
