@@ -1,9 +1,11 @@
 (function() {
-  function vendorModule() {
+  function vendorModule(RSVP) {
     'use strict';
 
-    return self['confirmer'];
+    var confirmer = self['confirmer'];
+    confirmer.default.Promise = RSVP.default.Promise;
+    return confirmer;
   }
 
-  define('confirmer', [], vendorModule);
+  define('confirmer', ['rsvp'], vendorModule);
 })();

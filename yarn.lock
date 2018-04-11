@@ -1543,9 +1543,9 @@ configstore@^3.0.0:
     write-file-atomic "^2.0.0"
     xdg-basedir "^3.0.0"
 
-confirmed@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/confirmed/-/confirmed-2.0.0.tgz#6ec277af54a010c418f81a1f24cb1306dea851f4"
+confirmed@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/confirmed/-/confirmed-2.1.0.tgz#e24c326a578f070f716b0ec1d03c72bbc490e96d"
 
 console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   version "1.1.0"

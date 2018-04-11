@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { module, test } from 'qunit';
 import Confirmer from 'confirmer';
 
-const { run: { next } } = Ember;
+const { run: { next }, RSVP } = Ember;
 
 module('Unit | Confirmer');
 
@@ -16,4 +16,8 @@ test('pants are on', function(assert) {
   new Confirmer(resolver => next(resolver.confirm))
     .onConfirmed(() => assert.ok(true, 'confirmation confirmed'))
     .onDone(done);
+});
+
+test('Uses RSVP as Promise implementation', function(assert) {
+  assert.equal(Confirmer.Promise, RSVP.Promise);
 });

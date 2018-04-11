@@ -5,6 +5,6 @@ module.exports = {
   normalizeEntityName: function () {},
 
   afterInstall() {
-    return this.addPackageToProject('confirmed');
+    return this.addPackageToProject('confirmed', '^2.1.0');
   }
 };
