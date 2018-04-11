@@ -282,8 +282,18 @@ export default Controller.extend({
     const remodel = this.get('remodal');
     return new Confirmer(resolver => {
       this.set('modalResolver', resolver);
-      remodal.open('confirmation');
-    }).onDone(() => remodal.close('confirmation'));
+      let promise = remodal.open('confirmation');
+      resolver.dispose(() => {
+        // https://github.com/sethbrasile/ember-remodal/issues/3
+        return promise.then(() => remodal.close('confirmation'));
+      })
+    })
+  },
+
+  actions: {
+    resolveModal(method, value) {
+      this.get('modalResolver')[method](value);
+    }
   }
 });
 ```
@@ -292,9 +302,9 @@ export default Controller.extend({
 {{#ember-remodal
     isService=true
     name="confirmation"
-    onConfirm=(action modalResolver.confirm)
-    onCancel=(action modalResolver.cancel)
-    onClose=(action modalResolver.cancel)
+    onConfirm=(action "resolveModal" "confirm")
+    onCancel=(action "resolveModal" "reject")
+    onClose=(action "resolveModal" "cancel")
     as |modal|}}
   {{#modal.cancel}}<button class="pull-right">Close</button>{{/modal.cancel}}
   <p>Pick yes or no:</p>
