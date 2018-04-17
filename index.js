@@ -14,7 +14,7 @@ module.exports = {
   },
 
   treeForVendor(vendorTree) {
-    var confirmedPath = path.join(this.project.root, 'node_modules', 'confirmed', 'dist');
+    var confirmedPath = path.join(path.dirname(require.resolve('confirmed')), 'dist');
     var confirmedTree = new Funnel(confirmedPath, {
       files: ['confirmer.js']
     });
