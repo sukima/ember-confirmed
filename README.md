@@ -285,7 +285,13 @@ export default Controller.extend({
       let promise = remodal.open('confirmation');
       resolver.dispose(() => {
         // https://github.com/sethbrasile/ember-remodal/issues/3
-        return promise.then(() => remodal.close('confirmation'));
+        return promise.then(() => {
+          let modal = remodal.get(`confirmation.modal`);
+          let modalState = tryInvoke(modal, 'getState');
+          // https://github.com/vodkabears/Remodal/issues/291
+          if (modalState !== 'opened') { return; }
+          return remodal.close('confirmation');
+        });
       })
     })
   },
