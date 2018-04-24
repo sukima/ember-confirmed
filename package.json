@@ -1,6 +1,6 @@
 {
   "name": "ember-confirmed",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "An Ember asynchronous confirmation addon",
   "keywords": [
     "ember-addon"
@@ -31,7 +31,7 @@
   "dependencies": {
     "broccoli-funnel": "^2.0.1",
     "broccoli-merge-trees": "^2.0.0",
-    "confirmed": "^2.1.0",
+    "confirmed": "^2.2.0",
     "ember-cli-babel": "^6.3.0"
   },
   "devDependencies": {
