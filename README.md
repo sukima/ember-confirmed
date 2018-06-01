@@ -268,7 +268,11 @@ export default Controller.extend({
 
 ### Example using ember-remodal
 
-This is an example using the [ember-remodal addon](http://sethbrasile.github.io/ember-remodal/).
+We have an `{{#ember-remodal-redux}}` component to handle the complexity of
+using remodal as a component instead of a global/service. If this does not fit
+your needs then you can still use remodal manually.
+
+This is an example using the [ember-remodal addon](http://sethbrasile.github.io/ember-remodal/) on your own.
 
 ```js
 import Controller from '@ember/controller';
@@ -279,21 +283,23 @@ export default Controller.extend({
   remodal: service(),
 
   showConfirmationModal() {
-    const remodel = this.get('remodal');
+    const remodal = this.get('remodal');
+    let modalName = 'confirmation'; // Change as needed
     return new Confirmer(resolver => {
       this.set('modalResolver', resolver);
-      let promise = remodal.open('confirmation');
+      let promise = remodal.open(modalName);
       resolver.dispose(() => {
         // https://github.com/sethbrasile/ember-remodal/issues/3
-        return promise.then(() => {
-          let modal = remodal.get(`confirmation.modal`);
-          let modalState = tryInvoke(modal, 'getState');
-          // https://github.com/vodkabears/Remodal/issues/291
-          if (modalState !== 'opened') { return; }
-          return remodal.close('confirmation');
-        });
-      })
-    })
+        return promise
+          .then(() => {
+            let modalState = tryInvoke(this.get('modal'), 'getState');
+            // https://github.com/vodkabears/Remodal/issues/291
+            if (modalState !== 'opened') { return; }
+            return remodal.close(modalName);
+          })
+          .then(() => this.set('modalResolver', null));
+      });
+    });
   },
 
   actions: {
@@ -306,7 +312,7 @@ export default Controller.extend({
 
 ```hbs
 {{#ember-remodal
-    isService=true
+    forService=true
     name="confirmation"
     onConfirm=(action "resolveModal" "confirm")
     onCancel=(action "resolveModal" "reject")
