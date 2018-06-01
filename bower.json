@@ -1,0 +1,6 @@
+{
+  "name": "ember-confirmed",
+  "dependencies": {
+    "remodal": "1.1.0"
+  }
+}
