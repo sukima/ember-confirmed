@@ -1,0 +1,1 @@
+export { default } from 'ember-confirmed/components/ember-remodal-redux';
