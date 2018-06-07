@@ -1,7 +1,8 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { bool } from '@ember/object/computed';
 import { computed } from '@ember/object';
+import { bool } from '@ember/object/computed';
+import { guidFor } from '@ember/object/internals';
 import { tryInvoke } from '@ember/utils';
 import Confirmer from 'confirmer';
 import layout from '../templates/components/ember-remodal-redux';
@@ -15,7 +16,7 @@ export default Component.extend({
   showModal: bool('modalResolver'),
 
   modalName: computed(function() {
-    return `${this.get('elementId')}-modal`;
+    return `${guidFor(this)}-modal`;
   }),
 
   modal: computed('modalName', function() {
