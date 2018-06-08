@@ -1,0 +1,11 @@
+<p>Result was confirmed: {{if confirmed 'YES' 'NO'}}</p>
+
+<button onclick={{action "showDialog"}}>Show Dialog</button>
+
+{{#ember-remodal-redux
+    registerModalController=(action (mut modalController))
+    as |modal|}}
+  <p>Hello World!</p>
+  {{#modal.cancel}}<button>Cancel</button>{{/modal.cancel}}
+  {{#modal.confirm}}<button>Ok</button>{{/modal.confirm}}
+{{/ember-remodal-redux}}
