@@ -12,6 +12,7 @@
     onOpen=(action "opened")
     onConfirm=(action "resolve" "confirm")
     onCancel=(action "resolve" "cancel")
+    onClose=(action "resolve" "cancel")
     as |modal|}}
   {{#if showModal}}
     {{yield modal (action "resolve")}}
