@@ -1,6 +1,6 @@
 {
   "name": "ember-confirmed",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "description": "An Ember asynchronous confirmation addon",
   "keywords": [
     "ember-addon"
