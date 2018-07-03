@@ -13,6 +13,13 @@ export default Component.extend({
   layout,
   tagName: '',
 
+  closeOnOutsideClick: true,
+  closeOnEscape: true,
+  closeOnCancel: true,
+  closeOnConfirm: '',
+  modifier: true,
+  hashTracking: false,
+
   showModal: bool('modalResolver'),
 
   modalName: computed(function() {
