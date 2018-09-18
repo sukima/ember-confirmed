@@ -3,7 +3,7 @@
 <button onclick={{action "showDialog"}}>Show Dialog</button>
 
 {{#ember-remodal-redux
-    registerModalController=(action (mut modalController))
+    registerModalManager=(action (mut modalManager))
     as |modal|}}
   <p>Hello World!</p>
   {{#modal.cancel}}<button>Cancel</button>{{/modal.cancel}}

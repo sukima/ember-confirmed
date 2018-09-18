@@ -6,6 +6,8 @@ import { guidFor } from '@ember/object/internals';
 import { tryInvoke } from '@ember/utils';
 import Confirmer from 'confirmer';
 import layout from '../templates/components/ember-remodal-redux';
+import { deprecate } from '@ember/application/deprecations';
+import { assert } from '@ember/debug';
 
 export default Component.extend({
   remodal: service(),
@@ -52,7 +54,15 @@ export default Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    this.get('registerModalController')({
+    let registerModalController = this.get('registerModalController');
+    let registerModalManager = this.get('registerModalManager') || registerModalController;
+    assert(`Missing required action 'registerModalManager'`, registerModalManager);
+    deprecate(
+      'use registerModalManager instead of registerModalController',
+      !registerModalController,
+      { id: 'ember-redux-remodal.registerModalController', until: '3.0' }
+    );
+    registerModalManager({
       getModal: () => this.get('modal'),
       open: () => this.openModal(),
       confirm: (v) => this.send('resolve', 'confirm', v),
