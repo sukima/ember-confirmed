@@ -14,10 +14,15 @@ module.exports = {
   },
 
   treeForVendor(vendorTree) {
-    var confirmedPath = path.join(path.dirname(require.resolve('confirmed')), 'dist');
-    var confirmedTree = new Funnel(confirmedPath, {
-      files: ['confirmer.js']
-    });
+    var confirmedPath = require.resolve('confirmed');
+
+    if (path.basename(confirmedPath) === 'index.js') {
+      confirmedPath = path.join(path.dirname(require.resolve('confirmed')), 'dist');
+    } else {
+      confirmedPath = path.dirname(require.resolve('confirmed'));
+    }
+
+    var confirmedTree = new Funnel(confirmedPath, { files: ['confirmer.js'] });
 
     return new MergeTrees([vendorTree, confirmedTree]);
   }
